@@ -5,17 +5,24 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-// IMPORTANTE: esto es lo que permite leer el body crudo
-app.use('/webhook', express.raw({ type: 'application/json' }));
+// Middleware para capturar el raw body (necesario para Stripe)
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
 
+// Webhook usa rawBody en lugar de body procesado
 app.post('/webhook', async (req, res) => {
   const sig = req.headers['stripe-signature'];
-
   let event;
+
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
   } catch (err) {
-    console.error(`Webhook signature verification failed.`, err.message);
+    console.error('⚠️ Webhook signature verification failed.', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
@@ -32,9 +39,9 @@ app.post('/webhook', async (req, res) => {
 
       await sheet.addRow({
         ID: session.id,
-        Correo: session.customer_details.email,
-        Nombre: session.customer_details.name,
-        Monto: session.amount_total / 100,
+        Correo: session.customer_details?.email || '',
+        Nombre: session.customer_details?.name || '',
+        Monto: session.amount_total ? session.amount_total / 100 : '',
         Fecha: new Date().toLocaleString(),
       });
 
@@ -48,4 +55,6 @@ app.post('/webhook', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`🚀 Webhook escuchando en http://localhost:${PORT}/webhook`));
+app.listen(PORT, () => {
+  console.log(`🚀 Webhook escuchando en http://localhost:${PORT}/webhook`);
+});
