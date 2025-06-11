@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "chatgpt-predicciones",
+  "private_key_id": "a8be1caeac8574a3d0add082f550299a33596ecb",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC7kLV2/+jCf+IG\no3Aowe7Pk6Q3PbzH2WpUmsIulRumULc0W9FV+Nubwi9yAnd1Lv7kIe4hP8AHS/3Y\nS/Uh60FJRXBpO6RRXsNy4/NrsA7YL643SrtpEtUCjb+jFag/2AnzIJ3ct9ISHpbc\nfxRHz4sDmBvRklEMn998f470TJWMr446TaTby53GPS4iWfzZiWfetL6gPELsEbNd\n3D0H5NR8i0HvDo6paBLcUni+2i1TpjPPZh9nEAijGfff0Bv3wYPRvHObEryzBPb7\nHxkfOq0EpjCnGePHfcJjI2h0gweUiGVQc+HDCFzsDkw1pwH32CnWGVQ4CcYOMDmO\nqBs0fAKDAgMBAAECggEADqCIM5mya6nwalHIQeLEfmXw+lPeCyceiS7bx36I/k0w\nyaxYD2B4XoBkFdExGAThtiXFPczhwKVBobgOtlCeh0Rwh0GyR0bgxBltwW9PQQxl\nhYSrnSlC+PotQIkZqrJCLbZ/SRgBZw4BTXxljFIYRl/62hA93Nes5IxyuATZlske\n8Xuv1RUJh7D1pexNujgWhJhhDZYOLwTuVLdSq610Hl+BJ4Nnm68+Jh/X1yeickLA\nH0+LLxwP54QXL/LmqCyW/c7QqO5UeMYyHNNxMFmgFhYCc75ddfzQn2jyK57iKzHr\nrNIvzz8Z9lhC4jPrL1YEMMEDnxb/FTGVBaWRgI3fhQKBgQD3bfAdyHKCxHcvKHWf\n12pmja3wdh9fSCuyhXhrpNyiCzPgEhxumCvIeJpchuNxeZWwlDNvBYHVNKGU0BPY\n+TmD1kw9gD3c6ByIefDGL2NjdWTBN55YwcwZ40niPKausNdM2Yq38XU3yaikAf9S\nrTh0Zl/IMlAaIMPPu61NisSH5QKBgQDCD+4HZnQQl/FbTj7XwHzi6UeBYxnjE8BV\nw9QodZnI2H6vQlMIy9O4U4pllVlSaPGc90bEUUOVUc1yHIdlJK/uB7hRKnwtt/UR\neohxYpbKriGPRX/5Xmwg0fwoQ2l8RhrsxA5KOuJrD++q7veIhqm3jTvrgTlMv125\n7l2qIofqRwKBgDRBarHPkKefeJBkGhts8lLAX1jmiY+k/V2RpLIPOm2ashUDni+Z\nQb3wAqHB9y0TAZMuaYJsBlSR7gIww9BSKlx2mNlwSSBrgQMtxbUFcxchRusrpOyX\n2VQqVYNLTeSdAot/cjWQ8DGdDFm+9j5uyPqEWHw+a/5opxIrT9mNkh4lAoGAOV/c\nT/PKfN1vTj9j9QXD5pJxwZ87GBfO1YyAPTYHsYnQaqCBTCh3ABgy4rW1IthEFtRE\n5+XexVbaFtK4dP7TxNwjclvNOvcYTYKctGkhi+rPoTw7Cc8QyONMWdsUZNmVPEr6\nrpeaOW0MvszIAmVN6CapgIdEGZy6aS5AIvzykiECgYBQMj9+aGJLxYnGRn1kvTj2\nw8G3X22rnrvVKlaa7FytlOtsBhJf9ZMKVdu/N6LurlLGp8zjo8g2tvRvTWxTZ3gZ\nkkqP9B0OTQdoHETZu4Q1np/+GMGeZmdRTMANkj+4G4E/YM072rLqIHpkhpXSTuNp\nKeewafFrhITXD2ic/NfFAg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "chatgpt-bot@chatgpt-predicciones.iam.gserviceaccount.com",
+  "client_id": "100672475836274091025",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/chatgpt-bot%40chatgpt-predicciones.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
