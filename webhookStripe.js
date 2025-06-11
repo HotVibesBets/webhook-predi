@@ -1,58 +1,51 @@
-require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
+const app = express();
+const fs = require('fs');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const CREDENCIALES = require('./credenciales_sheets.json');
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use('/webhook', bodyParser.raw({ type: 'application/json' }));
+// IMPORTANTE: esto es lo que permite leer el body crudo
+app.use('/webhook', express.raw({ type: 'application/json' }));
 
 app.post('/webhook', async (req, res) => {
   const sig = req.headers['stripe-signature'];
-  let event;
 
+  let event;
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (err) {
-    console.warn('⚠️  Error validando firma:', err.message);
+    console.error(`Webhook signature verification failed.`, err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  console.log(`📩 Evento recibido: ${event.type}`);
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    console.log('🧾 Datos de la sesión recibida:', session);
-
-    const nombre = session.customer_details?.name || '';
-    const email = session.customer_details?.email || '';
-    const telefono = session.customer_details?.phone || '';
+    const sheetId = process.env.GOOGLE_SHEET_ID;
 
     try {
-      const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
-      await doc.useServiceAccountAuth(CREDENCIALES);
+      const creds = require('./credenciales_sheets.json');
+      const doc = new GoogleSpreadsheet(sheetId);
+      await doc.useServiceAccountAuth(creds);
       await doc.loadInfo();
+      const sheet = doc.sheetsByIndex[0];
 
-      const sheet = doc.sheetsByTitle['Contactos_forms'];
       await sheet.addRow({
-        Nombre: nombre,
-        Contacto: telefono,
-        Correo: email,
-        Status: 'Activo',
-        'Día y hora de inicio de prueba': new Date().toLocaleString('es-MX', { timeZone: 'America/Mexico_City' })
+        ID: session.id,
+        Correo: session.customer_details.email,
+        Nombre: session.customer_details.name,
+        Monto: session.amount_total / 100,
+        Fecha: new Date().toLocaleString(),
       });
 
-      console.log(`✅ Cliente agregado: ${nombre}`);
+      console.log('✅ Datos guardados en Google Sheets');
     } catch (error) {
-      console.error('❌ Error al guardar en Google Sheets:', error);
+      console.error('❌ Error al guardar en Sheets:', error.message);
     }
   }
 
-  res.sendStatus(200);
+  res.status(200).send();
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Webhook escuchando en http://localhost:${PORT}/webhook`);
-});
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => console.log(`🚀 Webhook escuchando en http://localhost:${PORT}/webhook`));
